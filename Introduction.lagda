@@ -251,3 +251,46 @@ what we said they were: there are no new numbers, no error cases, no
 That is to say, Agda is a language of \emph{total} programs. You can
 approach it on the basis that things mean what they say, and---unusually
 for programming languages---you will usually be right.
+
+
+\section{Where are we going?}
+
+Agda is a language honest, expressive and precise. We shall use it to
+explore and model fundamental concepts in computation, working from
+concrete examples to the general structures that show up time and time
+again. We'll look at examples like parsers, interpreters, editors, and
+servers. We'll implement algorithms like arithmetic, sorting, search
+and unification. We'll see structures like monoids, functors, algebras
+and monads. The purpose is not just to teach a new language for
+instructing computers to do things, but to equip you with a deeper
+perception of structure and the articulacy to exploit that structure.
+
+Agda is a dependently typed language, meaning that types can mention
+values and thus describe their intended properties directly. If we are
+to be honest and ensure that we mean what we say, we had better be
+able to say more precisely what we do mean. This is not intended to be
+a course in dependently typed programming, although precision is
+habit-forming, so a certain amount of the serious business is
+inevitable. We'll also be in a position to state and prove that the
+programs we write are in various ways sensible. What would it take to
+convince you that the \texttt{+} operator we constructed above really
+does addition?
+
+I'm using Agda rather than Haskell for four reasons, two selfish, two
+less so.
+\begin{itemize}
+\item I am curious to see what happens.
+\item Using Agda brings my teaching a lot closer to my research and
+  obliges me to generate introductory material which will help
+  make this area more accessible. (The benefit for you is that I have
+  lots of motivation to write thorough notes.)
+\item Agda's honesty will help us see things as they really are: we cannot
+  push trouble under the rug without saying what sort of rug it is.
+  Other languages are much more casual about run time failure or other
+  forms of external interaction.
+\item Agda's editing environment gives strong and useful feedback during
+  the programming process, encouraging a type-centred method of development,
+  hopefully providing the cues to build good mental models of data and
+  computation. We do write programs with computers: we don't just type
+  them in.
+\end{itemize}
