@@ -11,8 +11,8 @@ data Nat : Set where
 -- Now we can say how to add numbers.
 
 _+_ : Nat -> Nat -> Nat
-zero   +  n  = n
-suc m  +  n  = suc (m + n)
+zero + n = n
+suc m + n = suc (m + n)
 
 -- Now we can try adding some numbers.
 

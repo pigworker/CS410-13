@@ -82,7 +82,7 @@ appointment.
 Step 1. Use Linux. Get yourself a shell. (It's going to be that sort
 of a deal, all the way along. Welcome back to the 1970s.)
 
-Step 2. Ensure that your \texttt{PATH} environment variable includes
+Step 2 for \emph{bash} users. Ensure that your \texttt{PATH} environment variable includes
 the directory where Haskell's \texttt{cabal} build manager puts
 executables. Under normal circumstances, this is readily achieved by
 ensuring that your \texttt{.profile} file contains the line:
@@ -92,17 +92,35 @@ ensuring that your \texttt{.profile} file contains the line:
 After you've edited \texttt{.profile}, grab a fresh shell window before
 continuing.
 
+Step 2 for \emph{tcsh} users. Ensure that your \texttt{path} environment variable includes
+the directory where Haskell's \texttt{cabal} build manager puts
+executables. Under normal circumstances, this is readily achieved by
+ensuring that your \texttt{.cshrc} file contains the line:
+\[
+\mbox{\texttt{set path = (\$home/.cabal/bin \$path)}}
+\]
+After you've edited \texttt{.cshrc}, grab a fresh shell window before
+continuing.
+
 Step 3. Ensure that you are in sync with the Haskell package database
 by issuing the command:
 \[
 \mbox{\texttt{cabal update}}
 \]
+Some people found that this bombs out with a missing library. Asking
+\texttt{which cabal} revealed that they had a spurious \texttt{\~{}/.cabal/bin/cabal}
+file which took precedence over the regular \texttt{/usr/bin/cabal}. Simply delete
+\texttt{\~{}/.cabal/bin/cabal} to fix this problem.
 
 Step 4. Install Agda by issuing the command:
 \[
 \mbox{\texttt{cabal install agda}}
 \]
-Yes, that's a lower case 'a' in 'agda'.
+Yes, that's a lower case 'a' in 'agda'. In some situations, it may not manage the full
+installation in one go, delivering an error message about which package or version it has
+failed to install. We've found that it's sometimes necessary to do
+\texttt{cabal install happy} separately, and to do \texttt{cabal install alex-3.0},
+requesting a specific older version, as required by another package.
 
 Step 5. Wait.
 
@@ -128,6 +146,18 @@ Step 10. Start an emacs session involving an Agda file, e.g., by the command:
 \[
 \mbox{\texttt{emacs Hello.agda \&}}
 \]
+The file should appear highlighted, and the mode line should say that the buffer is in
+Agda mode. In at least one case, this has proven problematic. To check what is going
+on, load the configuration file \texttt{\~{}/.emacs} and find the LISP command which
+refers to \texttt{agda-mode locate}. Try executing that command: select it with the
+mouse, then type ESC x, which should get you a prompt at which you can type
+\texttt{eval-region}, which will execute the selected command. If you get a message
+about not being able to find \texttt{agda-mode}, then edit the LISP command to give
+\texttt{agda-mode} the full path returned by asking \texttt{which agda-mode} in a shell.
+And if you get a bad response to \texttt{which agda-mode}, go back to step 2.
+
+Step 11. When you're done, please confirm by posting a message on the class discussion
+forum.
 
 
 \section{Making These Notes}
