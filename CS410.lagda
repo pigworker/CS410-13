@@ -50,6 +50,7 @@
 \ColourStuff
 
 
+\newcommand{\M}[1]{\mathsf{#1}}
 \newcommand{\D}[1]{\blue{\mathsf{#1}}}
 \newcommand{\C}[1]{\red{\mathsf{#1}}}
 \newcommand{\F}[1]{\green{\mathsf{#1}}}
@@ -90,8 +91,13 @@
 \maketitle
 
 
+
 %include Introduction.lagda
 
+%include BasicPrelude.lagda
+
+\appendix
+%include EmacsCheatSheet.lagda
 
 \bibliographystyle{plainnat}
 \bibliography{CS410.bib}

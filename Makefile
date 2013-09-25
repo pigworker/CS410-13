@@ -1,6 +1,6 @@
 default : CS410.pdf
 
-CS410.tex : CS410.lagda Introduction.lagda
+CS410.tex : CS410.lagda Introduction.lagda BasicPrelude.lagda EmacsCheatSheet.lagda
 	lhs2TeX --agda CS410.lagda > CS410.tex
 
 CS410.aux : CS410.tex
