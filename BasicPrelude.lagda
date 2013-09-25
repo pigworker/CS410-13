@@ -237,8 +237,12 @@ from left to right. We can write lists like
 \end{spec}
 but Agda does not supply any fancy syntax like Haskell's |[1,2,3,4,5]|.
 
+How many values are there in the set |List Zero|?
 
-\section{Interlude Insertion}
+Does the set |List One| remind you of any other set that you know?
+
+
+\section{Interlude: Insertion}
 
 %format insertionSort = "\F{insertionSort}"
 %format insertList = "\F{insertList}"
@@ -398,48 +402,169 @@ but unit testing is a good engineering practice, so let us take advantage
 of Agda's capacity to support it.
 
 
+\section{More Prelude: Sums and Products}
 
-\section{Sums and Products}
-
+%format /+/ = "\D{/\!\!+\!\!/}"
+%format _/+/_ = "\us{" /+/ "}"
+%format inl = "\C{inl}"
+%format inr = "\C{inr}"
+We often build datatypes which offer some sort of choice. Sometimes we just
+want to give a choice between two types which are already established. The
+type which offers `an |S| or a |T|' is called the \emph{sum} of |S| and
+|T|.\nudge{Haskell calls this construction |Either|.} We define it as a datatype
+with |S| and |T| as parameters, allowing
+constructors, for `left injection' and `right injection', respectively.
 \begin{code}
 data _/+/_ (S T : Set) : Set where
   inl  : S  -> S /+/ T
   inr  : T  -> S /+/ T
+\end{code}
 
+To see why it really is a kind of sum, try finding all the \emph{values} in each of
+\[
+  |Zero /+/ Zero|\quad |Zero /+/ One|\quad |One /+/ One|\quad
+  |One /+/ Two|\quad |Two /+/ Two|
+\]
+
+When we offer a choice, we need to able to cope with either possibility.
+The following gadget captures the idea of `computing by cases'.
+
+%format <?> = "\F{\left<?\right>}"
+%format _<?>_ = "\us{" <?> "}"
+\begin{code}
 _<?>_ :   {S T X : Set} ->
           (S -> X) -> (T -> X) ->
           S /+/ T -> X
 (f <?> g) (inl s) = f s
 (f <?> g) (inr t) = g t
+\end{code}
+It might look a bit weird that it's an \emph{infix} operator with \emph{three}
+arguments, but it's used in a higher-order way. To make a function,
+|f <?> g| which takes |S /+/ T| to some |X|, you need to have a function for each
+case, so |f| in |S -> X| and |g| in |T -> X|.
 
-------------------------------------------------------------------------------
-
+%format /*/ = "\D{/\!\!\times\!\!/}"
+%format _/*/_ = "\us{" /*/ "}"
+%format , = "\C{,}"
+%format outl = "\F{outl}"
+%format outr = "\F{outr}"
+Meanwhile, another recurrent theme in type design is that we ask for a \emph{pair}
+of things, drawn from existing types.\nudge{Haskell uses the notation |(s,t)| for
+both the types and values.} This is, somehow, the classic example of a |record|.
+\begin{code}
 record _/*/_ (S T : Set) : Set where
   constructor _,_
   field
-    fst  : S
-    snd  : T
+    outl  : S
+    outr  : T
 open _/*/_ public
-
 infixr 4 _,_
+\end{code}
+I have a little explaining to do, here. The |field| keyword introduces the
+declarations of the record's fields, which must be indented below it.
+We have two fields, so it makes sense to have an infix |constructor|, which is
+just a comma---unlike Haskell, parentheses are needed only to resolve ambiguity.
+The |open| declaration makes |outl| and |outr| available as the `left projection'
+and `right projection' functions, respectively. You can check that
+\[
+|outl : {S T : Set} -> S /*/ T -> S| \qquad
+|outr : {S T : Set} -> S /*/ T -> T|
+\]
+The |public| means that |outl| and |outr| stay in scope whenever any other module
+imports this one.
 
+To see why |S /*/ T| is called the \emph{product} of |S| and |T|, try finding
+all the values in the following types.
+\[
+|Zero /*/ Zero|\quad |Zero /*/ One| \quad |One /*/ One|\quad
+|One /*/ Two|\quad |Two /*/ Two|
+\]
+
+It is sometimes useful to be able to convert a function which takes a
+pair into a function which takes its arguments one at a time. This
+conversion is called `currying' after the logician, Haskell Curry,
+even though Moses Scho\"nfinkel invented it slightly earlier.
+%format curry = "\F{curry}"
+\begin{code}
+curry :  {S T X : Set} -> 
+         (S /*/ T -> X) ->
+         S -> T -> X
+curry f s t = f (s , t)
+\end{code}
+Its inverse is, arguably, even more useful, as it tells you how to build a
+function from pairs by considering each component separately.
+%format uncurry = "\F{uncurry}"
+\begin{code}
 uncurry :  {S T X : Set} -> 
            (S -> T -> X) ->
            S /*/ T -> X
 uncurry f (s , t) = f s t
+\end{code}
 
-------------------------------------------------------------------------------
 
+\section{Interlude: Exponentiation}
+
+How many functions are there in a type |S -> T|? It depends on when we consider
+two functions to be the same. Mathematically, such a function is considered just
+to be the choice of a |T| value corresponding to each |S| value. There might be
+lots of different ways to \emph{implement} that function, but if two programs
+of type |S -> T| agree on outputs whenever we feed them the same inputs, we say
+they are two implementations of the same function.
+
+So it's easy to count functions, at least if the sets involved are
+finite. If there are |t| different elements of |T| and |s| different
+elements of |S|, then we need to choose one of the |t| for each one of
+the |s|, so that's $t^s$ different possibilities. Just as |S /+/ T| really
+behaves like a sum and |S /*/ T| really behaves like a product, we
+find that |S -> T| really behaves like the exponential $|T|^{|S|}$.
+
+The fact that |curry| and |uncurry| are mutually inverse (or \emph{isomorphic})
+just tells us something we learned in school
+\[
+  |X|^{(|S /*/ T|)} \cong (|X|^{|T|})^{|S|}
+\]
+
+You might also remember that
+\[
+  |X|^{(|S /+/ T|)} \cong |X|^{|S|} |/*/| |X|^{|T|}
+\]
+and it's not hard to see why that makes sense in terms of counting functions.
+(Think about what |<?>| does.)
+
+Many of the algebraic laws you learned for numeric operations at school
+make perfect sense for \emph{type} operations and account for structures
+fundamental to computation. That's (to some extent) how the Mathematically
+Structured Programming Group came by its name. Keep your eyes peeled for more!
+
+
+\section{More Prelude: Basic Functional Plumbing}
+
+%format id = "\F{id}"
+%format o = "\F{\circ}"
+%format _o_ = "\us{" o "}"
+
+Functions are a bit like machines with an input pipe and an output pipe. Their
+types tell us whether it's safe to plumb them together. Any functional plumber
+needs some basic tools.
+
+Firstly, here's a bit of pipe with no machine in the middle---the \emph{identity}
+function. What comes out is what went in!
+\begin{code}
 id : {X : Set} -> X -> X
 id x = x
+\end{code}
 
+Secondly, we need to be able to plumb the output from one machine to the input
+of another. Here's function \emph{composition}.
+\begin{code}
 _o_ : {A B C : Set} -> (B -> C) -> (A -> B) -> (A -> C)
-(f o g) x = f (g x)
+(f o g) a = f (g a)
 
 infixr 2 _o_
-
-------------------------------------------------------------------------------
-
-------------------------------------------------------------------------------
-------------------------------------------------------------------------------
 \end{code}
+
+What laws do you think |id| and |o| should obey? If you plumb an extra bit of pipe
+onto a machine, does it change what the machine does? If you plumb a sequence of
+machines together, the order of the machines can clearly matter, but does the
+order in which you did the plumbing jobs affect the behaviour of the end product?
+
