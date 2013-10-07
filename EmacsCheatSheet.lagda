@@ -17,6 +17,15 @@ everything. It will also make sure everything is displayed in the correct colour
 
 The following apply only when the cursor is sitting inside the braces of a goal.
 
+\subsection*{[C-c C-,] what's going on?}
+
+If you select a goal and type this keystroke, the information buffer
+will tell you the type of the goal and the types of everything in the
+context. Some things in the context are not in scope, because you
+haven't bound them with a name anywhere. These show up with names
+Agda chooses, beginning with a dot: you cannot refer to these things,
+but they do exist.
+
 \subsection*{[C-c C-spc] give expression}
 
 If you think you know which expression belongs in a goal, type the expression
@@ -31,6 +40,11 @@ a variable in the goal, then make this keystroke. Agda will try to split that
 variable into its possible constructor patterns. Amusingly, if you type several
 variables names and ask for a case analysis, you will get all the possible
 combinations from splitting each of the variables.
+
+\subsection*{[C-c C-r] refine}
+
+If there's only one constructor which fits in the hole, Agda deploys
+it. If there's a choice, Agda tells you the options.
 
 \subsection*{[C-c C-a] ask Agsy (a.k.a. I feel lucky)}
 

@@ -96,6 +96,11 @@
 
 %include BasicPrelude.lagda
 
+%include Logic.lagda
+
+%include Razor.lagda
+
+
 \appendix
 %include EmacsCheatSheet.lagda
 
