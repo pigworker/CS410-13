@@ -227,7 +227,7 @@ data List (X : Set) : Set where
   []    : List X
   _:>_  : X -> List X -> List X
 
-infixr 3 _:>_
+infixr 5 _:>_
 \end{code}
 I give a `nil' constructor, |[]|, and a right associative infix `cons' constructor,
 |:>|, which is arrowhead-shaped to remind you that you access list elements
@@ -240,6 +240,14 @@ but Agda does not supply any fancy syntax like Haskell's |[1,2,3,4,5]|.
 How many values are there in the set |List Zero|?
 
 Does the set |List One| remind you of any other set that you know?
+
+\begin{code}
+infixr 5 _++_
+
+_++_ : {A : Set} -> List A -> List A -> List A
+[]         ++ ys = ys
+(x :> xs)  ++ ys = x :> (xs ++ ys)
+\end{code}
 
 
 \section{Interlude: Insertion}
@@ -362,6 +370,8 @@ new programs. We can make the typechecker run our unit tests for us, making use
 of the following\nudge{Yes, it is scary.} piece of kit.
 
 \begin{code}
+infix 4 _==_
+
 data _==_ {X : Set}(x : X) : X -> Set where
   refl : x == x
 \end{code}
@@ -415,6 +425,8 @@ type which offers `an |S| or a |T|' is called the \emph{sum} of |S| and
 with |S| and |T| as parameters, allowing
 constructors, for `left injection' and `right injection', respectively.
 \begin{code}
+infixr 1 _/+/_
+
 data _/+/_ (S T : Set) : Set where
   inl  : S  -> S /+/ T
   inr  : T  -> S /+/ T
@@ -452,6 +464,8 @@ Meanwhile, another recurrent theme in type design is that we ask for a \emph{pai
 of things, drawn from existing types.\nudge{Haskell uses the notation |(s,t)| for
 both the types and values.} This is, somehow, the classic example of a |record|.
 \begin{code}
+infixr 2 _/*/_
+
 record _/*/_ (S T : Set) : Set where
   constructor _,_
   field
@@ -486,7 +500,7 @@ conversion is called `currying' after the logician, Haskell Curry,
 even though Moses Scho\"nfinkel invented it slightly earlier.
 %format curry = "\F{curry}"
 \begin{code}
-curry :  {S T X : Set} -> 
+curry :  {S T X : Set} ->
          (S /*/ T -> X) ->
          S -> T -> X
 curry f s t = f (s , t)
@@ -495,7 +509,7 @@ Its inverse is, arguably, even more useful, as it tells you how to build a
 function from pairs by considering each component separately.
 %format uncurry = "\F{uncurry}"
 \begin{code}
-uncurry :  {S T X : Set} -> 
+uncurry :  {S T X : Set} ->
            (S -> T -> X) ->
            S /*/ T -> X
 uncurry f (s , t) = f s t
