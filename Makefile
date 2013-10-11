@@ -15,3 +15,21 @@ CS410.dvi : CS410.tex CS410.blg
 
 CS410.pdf : CS410.tex CS410.blg
 	pdflatex CS410
+
+
+# Ex2
+
+EX2=Ex2
+REPLACE=replace
+
+ex2: $(EX2).pdf
+
+$(EX2).pdf: latex/$(EX2).tex
+	cd latex/ && \
+	latexmk -pdf -use-make $(EX2).tex && \
+	mv $(EX2).pdf ..
+
+latex/%.tex: %.lagda
+	agda --allow-unsolved-metas -i . --latex $<
+	sed -f $(REPLACE).sed $@ > $@.sedded
+	mv $@.sedded $@
