@@ -26,6 +26,12 @@ haven't bound them with a name anywhere. These show up with names
 Agda chooses, beginning with a dot: you cannot refer to these things,
 but they do exist.
 
+\subsection*{[C-c C-.] more on what's going on?}
+
+This is a variant of the above which in addition also shows you the type
+of the expression currently typed into the hole. This is useful for
+trying different constructions out before giving/refining them!
+
 \subsection*{[C-c C-spc] give expression}
 
 If you think you know which expression belongs in a goal, type the expression
@@ -77,3 +83,16 @@ that expression. The normal form might not be a value, because there
 might be some variables in your expression, getting in the way of
 computation. When there are no free variables present, the normal form
 is sure to be a value.
+
+\section{Moving around}
+
+\subsection*{[C-c C-f]/[C-c C-b] move to next/previous goal}
+
+A quick way to get to where the action is to use these two keystrokes,
+which takes you to the next and previous goal respectively.
+
+\subsection*{[M-.] go to definition}
+
+If you find yourself wondering what the definition of some identifier
+is, then you can put the cursor at it and use this keystroke -- it will
+make Agda take you there.
