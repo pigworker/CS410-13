@@ -12,6 +12,13 @@ spaces between the individual key descriptions.
 This keystroke tells Agda to resynchronize with the buffer contents, typechecking
 everything. It will also make sure everything is displayed in the correct colour.
 
+\subsection*{[C-c C-x C-d] deactivate goals}
+
+This keystroke deactivates Agda's goal machinery.
+
+\subsection*[C-c C-x C-r] restart Agda}
+
+This keystroke restarts Agda.
 
 \section{Working in a goal}
 
