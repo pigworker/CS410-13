@@ -16,7 +16,7 @@ everything. It will also make sure everything is displayed in the correct colour
 
 This keystroke deactivates Agda's goal machinery.
 
-\subsection*[C-c C-x C-r] restart Agda}
+\subsection*{[C-c C-x C-r] restart Agda}
 
 This keystroke restarts Agda.
 

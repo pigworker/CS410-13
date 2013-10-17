@@ -30,7 +30,7 @@ work and feedback will be mediated via your git repository.
 
 \textbf{Monday:~} Lecture and Lab, 2--5pm LT1301
 
-\textbf{Tuesday:~} Tutorial, 4--5pm, GH718 (this will usually be
+\textbf{Tuesday:~} Tutorial, 4--5pm, LT718 (this will usually be
   conducted by one of my graduate students)
 
 \textbf{Friday:~} Lecture, 11am--12pm, GH811
