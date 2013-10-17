@@ -200,6 +200,13 @@ two branches are just the same as the type of the overall expression?
 Do we not know more, once we have checked the condition? How could we
 know that we know more?)
 
+We can use conditionals to define conjunction of two Booleans:
+
+\begin{code}
+_/\_ : Two -> Two -> Two
+b1 /\ b2 = if b1 then b2 else ff
+\end{code}
+%
 Now that we have a way to represent Boolean values and conditional expressions,
 we might like to have some conditions. E.g., let us be able to compare numbers.
 %format <= = "\F{\le}"
@@ -210,7 +217,6 @@ zero   <= y      = tt
 suc x  <= zero   = ff
 suc x  <= suc y  = x <= y
 \end{code}
-
 
 %format List = "\D{List}"
 %format :> = "\C{:\!>}"
