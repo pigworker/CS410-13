@@ -375,11 +375,31 @@ The good news is that Agda can run old programs \emph{during} typechecking of
 new programs. We can make the typechecker run our unit tests for us, making use
 of the following\nudge{Yes, it is scary.} piece of kit.
 
-\begin{code}
+\begin{spec}
 infix 4 _==_
 
 data _==_ {X : Set}(x : X) : X -> Set where
   refl : x == x
+\end{spec}
+
+\begin{code}
+
+postulate
+      Level : Set
+      lzero  : Level
+      lsuc   : Level -> Level
+      lmax   : Level -> Level -> Level
+
+{-# BUILTIN LEVEL     Level #-}
+{-# BUILTIN LEVELZERO lzero  #-}
+{-# BUILTIN LEVELSUC  lsuc   #-}
+{-# BUILTIN LEVELMAX  lmax   #-}
+
+data _==_ {l}{X : Set l}(x : X) : X -> Set l where
+  refl : x == x
+infix 4 _==_
+{-# BUILTIN EQUALITY _==_ #-}
+{-# BUILTIN REFL refl #-}
 \end{code}
 
 This |data|type has two parameters: the |X| in braces is a |Set|, and the
