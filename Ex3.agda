@@ -163,6 +163,12 @@ As before, I've left it to you to put the ordering evidence somewhere sensible.
                OList l u
   flattenT23 t = {!!}
 
+{- NOTE: while an implementation of "flatten23" which uses some variation on
+   concatenation will be adequate, a small bonus will be available for a
+   solution which introduces an accumulating parameter and runs in linear
+   time. The same technique as in Ex1 can be made to work, but it takes a
+   little thought to manage the ordering properly. -}
+
   sort23 : List X -> OList bot top
   sort23 xs = flattenT23 (tree (makeSomeT23 xs))
 
