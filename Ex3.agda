@@ -158,8 +158,8 @@ As before, I've left it to you to put the ordering evidence somewhere sensible.
   makeSomeT23 : List X -> SomeT23
   makeSomeT23 xs = {!!}
 
-  flattenT23 : {l v u : BT}{n : Nat} ->
-               T23 l v n ->
+  flattenT23 : {l u : BT}{n : Nat} ->
+               T23 l u n ->
                OList l u
   flattenT23 t = {!!}
 
@@ -189,11 +189,15 @@ owoto (suc x) (suc y) = owoto x y
 
 open OTreeSort owoto -- this gives us the Nat instance of all your sorting stuff
 
+
 {- Here are some tests for your code! -}
 
 myList : List Nat
 myList =  20 :> 1 :> 18 :> 4 :> 13 :> 6 :> 10 :> 15 :> 2 :> 17 :>
           3 :> 19 :> 7 :> 16 :> 8 :> 11 :> 14 :> 9 :> 12 :> 5 :> []
+
+try : OList bot top
+try = 1 :> 3 :> 2 :> []
 
 
 myList' : OList bot top

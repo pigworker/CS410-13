@@ -24,13 +24,13 @@ BLE LE (# x) (# y) = LE x y
 
 data OList {X : Set}(LE : X -> X -> Set)(l : LB X) : Set where
   [] : OList LE l
-  _:>_ : (x : X){p : BLE LE l (# x)}(xs : OList LE (# x))   -> OList LE l
+  _:>_ : (x : X){{p : BLE LE l (# x)}}(xs : OList LE (# x))   -> OList LE l
 
 myList : OList Le bot
 myList = 3 :> (6 :> (9 :> []))
 
-insert : {l : LB Nat}(y : Nat){p : BLE Le l (# y)}(xs : OList Le l) -> OList Le l
-insert y {p} [] = _:>_ y {p} []
+insert : {l : LB Nat}(y : Nat){{p : BLE Le l (# y)}} -> OList Le l -> OList Le l
+insert y []                         = y :> []
 insert y (x :> xs) with owoto y x 
-insert y {p} (x :> xs) | inl p' = _:>_ y {p} (_:>_ x {p'} xs)
-insert y {p} (_:>_ x {p''} xs) | inr p' = _:>_ x {p''} (insert y {p'} xs)
+insert y (x :> xs) | inl u          = y :> (x :> xs)
+insert y (x :> xs) | inr _          = x :> insert y xs
