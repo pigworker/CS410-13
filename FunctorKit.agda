@@ -129,9 +129,9 @@ pattern cons x xs = [ inr (x , xs) ]
 treeK : Kit -> Kit
 treeK f = oneK +K (idK *K dataK f *K idK)
 
---leaf' : {f : Kit} -> DATA (treeK f)
+leaf' : {f : Kit} -> DATA (treeK f)
 pattern leaf = [ inl <> ]
---leaf' = leaf
+leaf' = leaf
 pattern node l x r = [ inr (l , x , r) ]
 node' : {f : Kit} ->  DATA (treeK f) -> DATA f -> DATA (treeK f) -> DATA (treeK f)
 node' l x r = node l x r

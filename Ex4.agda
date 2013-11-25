@@ -81,7 +81,7 @@ ap1 f (a , c) = f a , c
    fails if it is at the root already. -}
 
 zipUp : {f : Kit} -> Zipper f -> Maybe (Zipper f)
-zipUp zf = {!!}
+zipUp {f} zf = {!!}
 
 
 {- 4 Implement the function which takes an unfocused f and tries to focus it
@@ -150,29 +150,31 @@ infixr 3 _>=>_
      (d) finishes back at the root. -}
 
 myJourney : Journey {treeK natK}
-  (node  (node  (node leaf (toNatK 0) leaf)
-                (toNatK 1)
-                (node leaf (toNatK 2) leaf))
-         (toNatK 3) 
-         (node  ((node leaf (toNatK 4) leaf))
-                (toNatK 5)
-                ((node leaf (toNatK 6) leaf))) ,
+  (node'  (node'  (node' leaf' (toNatK 0) leaf')
+                  (toNatK 1)
+                  (node' leaf' (toNatK 2) leaf'))
+          (toNatK 3) 
+          (node'  ((node' leaf' (toNatK 4) leaf'))
+                  (toNatK 5)
+                  ((node' leaf' (toNatK 6) leaf'))) ,
   [])
 myJourney = {!!}          
 
 
-{- 9 Implement the operation which collects *all* the ways to go "down" by decorating each
-   element with its context, thus putting each into focus. You will need to use the
-   map operator with FunFunctor (see FunctorKit.agda) in various places. -}
+{- 9 Implement the operation which collects *all* the ways to go
+   "down" by decorating each element with its context, thus putting
+   each into focus. You will need to use the map operator with
+   FunFunctor (see FunctorKit.agda) in various places. -}
 
 down : {X : Set}(f : Kit) -> Fun f X -> Fun f (Fun (focus f) X)
 down f xf = {!!}
 
 
-{- 10 Implement the operation which takes *focused* data and decorates each element
-   with *its own* focus, thus showing you every focus you can move to (with "staying
-   put" being the focus in focus). I've done "staying put". Your job is to explain
-   which "moves" are possible. -}
+{- 10 Implement the operation which takes *focused* data and decorates
+   each element with *its own* focus, thus showing you every focus you
+   can move to (with "staying put" being the focus in focus). I've
+   done "staying put". Your job is to explain which "moves" are
+   possible. -}
 
 around : {X : Set}(f : Kit) -> Fun (focus f) X -> Fun (focus f) (Fun (focus f) X)
 
