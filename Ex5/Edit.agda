@@ -126,7 +126,7 @@ keystroke k b = allQuiet , b /// refl
 {- You will need to improve substantially on my implementation of the next component,
    whose purpose is to update the window. Mine displays only one line! -}
 render :
-  Nat /*/ Nat ->        -- height and width of window
+  Nat /*/ Nat ->        -- height and width of window -- CORRECTION! width and height
   Nat /*/ Nat ->        -- first visible row, first visible column
   Change /*/ Buffer ->  -- what just happened
   List Action /*/       -- how to update screen
