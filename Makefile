@@ -2,6 +2,7 @@ default : CS410.pdf
 
 CS410.tex : CS410.lagda Introduction.lagda BasicPrelude.lagda EmacsCheatSheet.lagda Logic.lagda Razor.lagda
 	lhs2TeX --agda CS410.lagda > CS410.tex
+	sed -i 's/_==_/\\_==\\_/g' CS410.tex
 
 CS410.aux : CS410.tex
 	latex CS410
